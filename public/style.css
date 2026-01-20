@@ -12,10 +12,6 @@ header h1 {
   font-weight: bold;
 }
 
-header img {
-  width: 200px;
-}
-
 .input-group-text, .disable-text {
   cursor: default;
   user-select: none;
@@ -31,4 +27,14 @@ table.table-bordered>thead>tr>th {
 
 table.table-bordered>tbody>tr>td {
   border: 1px solid #c1c1c1;
+}
+
+/* Disclaimer card */
+.disclaimer {
+  background-color: #fff4f0;
+  border: 1px solid #f0c6b0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #333;
 }
