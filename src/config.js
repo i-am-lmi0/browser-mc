@@ -25,7 +25,7 @@ module.exports = {
     // set them differently from bindingAddress and port if rammerhead is being served
     // from a reverse proxy.
     getServerInfo: () => ({
-        hostname: 'https://browser-mc.onrender.com', // Render’s public domain
+        hostname: 'browser-mc.onrender.com', // Render’s public domain
         port: 443, // HTTPS port if using SSL, or 80 for HTTP
         crossDomainPort: undefined,
         protocol: 'https:' // or 'http:' if not using SSL
@@ -36,7 +36,7 @@ module.exports = {
     // },
 
     // enforce a password for creating new sessions. set to null to disable
-    password: 'AllHailArnieTheKing',
+    password: 'AllHailArnie123',
 
     // disable or enable localStorage sync (turn off if clients send over huge localStorage data, resulting in huge memory usages)
     disableLocalStorageSync: false,
