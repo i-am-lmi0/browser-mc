@@ -24,7 +24,12 @@ module.exports = {
     // this function's return object will determine how the client url rewriting will work.
     // set them differently from bindingAddress and port if rammerhead is being served
     // from a reverse proxy.
-    getServerInfo: () => ({ hostname: '0.0.0.0', port: process.env.PORT || 8080, crossDomainPort: process.env.CROSS_DOMAIN_PORT || undefined, protocol: 'http:' }),
+    getServerInfo: () => ({
+        hostname: 'https://browser-mc.onrender.com', // Render’s public domain
+        port: 443, // HTTPS port if using SSL, or 80 for HTTP
+        crossDomainPort: undefined,
+        protocol: 'https:' // or 'http:' if not using SSL
+    }),
     // example of non-hard-coding the hostname header
     // getServerInfo: (req) => {
     //     return { hostname: new URL('http://' + req.headers.host).hostname, port: 443, crossDomainPort: 8443, protocol: 'https: };
