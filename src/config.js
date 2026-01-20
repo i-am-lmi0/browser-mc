@@ -4,20 +4,18 @@ const os = require('os');
 const RammerheadJSMemCache = require('./classes/RammerheadJSMemCache.js');
 const RammerheadJSFileCache = require('./classes/RammerheadJSFileCache.js');
 
-enableWorkers: false,
-workers: 1,
-
 module.exports = {
+    
     //// HOSTING CONFIGURATION ////
 
     bindingAddress: '0.0.0.0',
     port: process.env.PORT || 8080,
-    crossDomainPort: process.env.CROSS_DOMAIN_PORT || 8081,
+    crossDomainPort: undefined,
     publicDir: path.join(__dirname, '../public'), // set to null to disable
 
     // enable or disable multithreading
-    enableWorkers,
-    workers: os.cpus().length,
+    enableWorkers: false,
+    workers: 1,
 
     // ssl object is either null or { key: fs.readFileSync('path/to/key'), cert: fs.readFileSync('path/to/cert') }
     // for more info, see https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener
@@ -44,7 +42,7 @@ module.exports = {
     // caching options for js rewrites. (disk caching not recommended for slow HDD disks)
     // recommended: 50mb for memory, 5gb for disk
     // jsCache: new RammerheadJSMemCache(5 * 1024 * 1024),
-    jsCache: new RammerheadJSFileCache(path.join(__dirname, '../cache-js'), 5 * 1024 * 1024 * 1024, 50000, enableWorkers),
+    jsCache: new RammerheadJSFileCache(path.join(__dirname, '../cache-js'), 5 * 1024 * 1024 * 1024, 50000, false),
 
     // whether to disable http2 support or not (from proxy to destination site).
     // disabling may reduce number of errors/memory, but also risk
