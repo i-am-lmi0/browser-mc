@@ -20,17 +20,9 @@ module.exports = function setupPipeline(proxyServer, sessionStore) {
         }
     });
 
-    proxyServer.addToOnResponsePipeline((req, res, _serverInfo, isRoute, ctx) => {
-        if (isRoute) return;
-
-        const headers = ctx.responseHeaders;
-        if (!headers) return;
-
-        delete headers['x-frame-options'];
-        delete headers['content-security-policy'];
-        delete headers['content-security-policy-report-only'];
-        delete headers['frame-ancestors'];
-    });
-
     Object.assign(proxyServer.rewriteServerHeaders, config.rewriteServerHeaders);
+
+    proxyServer.rewriteServerHeaders['x-frame-options'] = null;
+    proxyServer.rewriteServerHeaders['content-security-policy'] = null;
+    proxyServer.rewriteServerHeaders['content-security-policy-report-only'] = null;
 };
