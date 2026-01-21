@@ -1,16 +1,10 @@
 const config = require('../config');
 const getSessionId = require('../util/getSessionId');
 
-/**
- * @param {import('../classes/RammerheadProxy')} proxyServer
- * @param {import('../classes/RammerheadSessionAbstractStore')} sessionStore
- */
 module.exports = function setupPipeline(proxyServer, sessionStore) {
-    // remove headers defined in config.js
     proxyServer.addToOnRequestPipeline((req, res, _serverInfo, isRoute) => {
-        if (isRoute) return; // only strip those that are going to the proxy destination website
+        if (isRoute) return;
 
-        // restrict session to IP if enabled
         if (config.restrictSessionToIP) {
             const sessionId = getSessionId(req.url);
             const session = sessionId && sessionStore.get(sessionId);
@@ -25,5 +19,18 @@ module.exports = function setupPipeline(proxyServer, sessionStore) {
             delete req.headers[eachHeader];
         }
     });
+
+    proxyServer.addToOnResponsePipeline((req, res, _serverInfo, isRoute, ctx) => {
+        if (isRoute) return;
+
+        const headers = ctx.responseHeaders;
+        if (!headers) return;
+
+        delete headers['x-frame-options'];
+        delete headers['content-security-policy'];
+        delete headers['content-security-policy-report-only'];
+        delete headers['frame-ancestors'];
+    });
+
     Object.assign(proxyServer.rewriteServerHeaders, config.rewriteServerHeaders);
 };
